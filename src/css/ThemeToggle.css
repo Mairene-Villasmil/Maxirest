@@ -1,0 +1,18 @@
+body.dark-mode {
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .theme-toggle {
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .theme-toggle:hover {
+    background-color: #0056b3;
+  }  

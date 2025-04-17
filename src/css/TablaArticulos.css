@@ -1,0 +1,79 @@
+.tabla-articulos-container {
+  display: flex;
+}
+
+.tabla-content {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+.tabla-articulos {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #1c1c1c;
+  color: white;
+}
+
+.tabla-articulos th,
+.tabla-articulos td {
+  padding: 10px;
+  border: 1px solid #444;
+  text-align: left;
+}
+
+.sidebar-agrupaciones {
+  width: 250px;
+  padding: 1rem;
+  background: #f8f8f8;
+}
+
+.sidebar-btn {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  border: none;
+  text-align: left;
+  background: none;
+  cursor: pointer;
+}
+
+.sidebar-btn.active {
+  font-weight: bold;
+  background-color: #e0e0e0;
+}
+
+.agrupacion-tabla {
+  margin-bottom: 2rem;
+}
+
+.rubro-bloque {
+  margin-bottom: 1rem;
+}
+
+.subrubro-bloque {
+  margin-left: 1rem;
+}
+
+.tabla-articulos-container {
+  display: flex;
+  flex-direction: row; /* Asegura que los hijos estén en fila */
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.sidebars {
+  width: 220px; /* Ajustá a gusto */
+  background-color: #f4f4f4;
+  border-right: 1px solid #ddd;
+  padding: 1rem;
+  height: 100%;
+}
+
+.tabla-content {
+  flex: 1; /* Toma el espacio restante */
+  padding: 1rem;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
