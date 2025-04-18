@@ -54,6 +54,6 @@
 
   .navbar-actions {
     flex-direction: column;
-    gap: 10px;
+    gap: 11px;
   }
 }
