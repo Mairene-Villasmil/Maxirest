@@ -1,31 +1,27 @@
 import React from 'react';
-import { Button } from '@mui/material';
+import { FaListAlt } from 'react-icons/fa';
 import '../css/SidebarCategorias.css';
 
-const SidebarCategorias = ({
-  categorias,
-  categoriaSeleccionada,
-  onCategoriaSeleccionada,
-}) => {
-  const handleCategoriaClick = (categoria) => {
-    onCategoriaSeleccionada(categoria);
-  };
-
+const SidebarCategorias = ({ categorias, setCategoriaSeleccionada }) => {
   return (
     <div className="sidebar">
-      {categorias.map((categoria, index) => (
-        <Button
-          key={index}
-          variant={categoria === categoriaSeleccionada ? 'contained' : 'outlined'}
-          fullWidth
-          onClick={() => handleCategoriaClick(categoria)}
-          sx={{ mb: 1 }}
-        >
-          {categoria}
-        </Button>
-      ))}
+      <h2>Categorías</h2>
+      <ul>
+        <li onClick={() => setCategoriaSeleccionada(null)}>
+          <FaListAlt className="icono" /> Ver todas
+        </li>
+        {categorias.map((categoria) => (
+          <li
+            key={categoria.id}
+            onClick={() => setCategoriaSeleccionada(categoria)}
+          >
+            <FaListAlt className="icono" /> {categoria.nombre}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
 
 export default SidebarCategorias;
+

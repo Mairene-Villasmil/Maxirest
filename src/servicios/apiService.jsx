@@ -16,10 +16,14 @@ export const obtenerToken = async () => {
   }
 };
 
-export const obtenerArticulos = async (token) => {
+export const obtenerArticulos = async (token, fechaInicio, fechaFin) => {
   try {
     const response = await axios.get(`${API_BASE_URL}/menuweb/menuextendido`, {
       headers: { Authorization: `Bearer ${token}` },
+      params: {
+        fechaInicio,
+        fechaFin
+      }
     });
     return response.data.content;
   } catch (error) {
@@ -27,3 +31,12 @@ export const obtenerArticulos = async (token) => {
     throw error;
   }
 };
+
+export const obtenerVentasPorArticulo = async (token, desde, hasta) => {
+  const response = await axios.get('/api/ventasPorArticulo', {
+    headers: { Authorization: `Bearer ${token}` },
+    params: { desde, hasta }
+  });
+  return response.data;
+};
+

@@ -12,28 +12,41 @@ const App = () => {
   const [filtroBusqueda, setFiltroBusqueda] = useState('');
   const [agrupacionSeleccionada, setAgrupacionSeleccionada] = useState(null);
   const [agrupaciones, setAgrupaciones] = useState([]);
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState([]);
+  const [fechaInicio, setFechaInicio] = useState('');
+  const [fechaFin, setFechaFin] = useState('');
 
+  // Función para recargar las agrupaciones desde localStorage
   const recargarAgrupaciones = () => {
     const agrupacionesGuardadas = JSON.parse(localStorage.getItem('agrupaciones')) || [];
     setAgrupaciones(agrupacionesGuardadas);
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const tokenObtenido = await obtenerToken();
-        const articulosObtenidos = await obtenerArticulos(tokenObtenido);
-        setArticulos(articulosObtenidos);
-      } catch (error) {
-        console.error('Error al cargar los datos:', error);
-      }
-    };
-    fetchData();
-  }, []);
+  // Llamada a la API para obtener artículos
+  const fetchArticulos = async () => {
+    try {
+      const tokenObtenido = await obtenerToken();
+      const articulosObtenidos = await obtenerArticulos(tokenObtenido, fechaInicio, fechaFin);
+      setArticulos(articulosObtenidos);
+    } catch (error) {
+      console.error('Error al cargar los datos:', error);
+    }
+  };
 
+  // Efecto para obtener artículos cuando cambia la fecha
+  useEffect(() => {
+    fetchArticulos();
+  }, [fechaInicio, fechaFin]);
+
+  // Efecto para recargar agrupaciones cuando la ubicación cambia
   useEffect(() => {
     recargarAgrupaciones();
   }, [location]);
+
+  // Efecto para obtener artículos al inicio
+  useEffect(() => {
+    fetchArticulos();
+  }, []);
 
   return (
     <>
@@ -41,6 +54,8 @@ const App = () => {
         setFiltroBusqueda={setFiltroBusqueda}
         agrupaciones={agrupaciones}
         setAgrupacionSeleccionada={setAgrupacionSeleccionada}
+        agrupacionSeleccionada={agrupacionSeleccionada}
+        setCategoriaSeleccionada={setCategoriaSeleccionada}
       />
 
       <Routes>
@@ -52,7 +67,9 @@ const App = () => {
               filtroBusqueda={filtroBusqueda}
               setFiltroBusqueda={setFiltroBusqueda}
               agrupacionSeleccionada={agrupacionSeleccionada}
-              setAgrupacionSeleccionada={setAgrupacionSeleccionada}
+              categoriaSeleccionada={categoriaSeleccionada}
+              setFechaInicio={setFechaInicio}
+              setFechaFin={setFechaFin}
             />
           }
         />
@@ -61,7 +78,11 @@ const App = () => {
           path="/agrupaciones"
           element={<Agrupaciones actualizarAgrupaciones={recargarAgrupaciones} />}
         />
-        <Route path="/agrupacioneslist" element={<AgrupacionesList />} />
+
+        <Route
+          path="/agrupacioneslist"
+          element={<AgrupacionesList agrupaciones={agrupaciones} />}
+        />
       </Routes>
     </>
   );

@@ -2,6 +2,7 @@
   "name": "maxirest-tables",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://mairenevillasmil.github.io/Maxirest",
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
@@ -9,8 +10,10 @@
     "@mui/material": "^7.0.0",
     "axios": "^1.7.9",
     "cra-template": "1.2.0",
+    "lodash": "^4.17.21",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-icons": "^5.5.0",
     "react-router-dom": "^7.3.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^4.2.4"
@@ -19,7 +22,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -38,7 +43,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^6.3.0"
   }
-  
 }
-

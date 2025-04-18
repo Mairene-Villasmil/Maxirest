@@ -1,13 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-} from '@mui/material';
+import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import '../css/Navbar.css';
-import ThemeToggle from './ThemeToggle';
 import Buscador from './Buscador';
 
 const Navbar = ({
@@ -30,17 +24,22 @@ const Navbar = ({
 
   const handleAgrupacionChange = (event) => {
     const rubro = event.target.value;
-    const agrupacionSeleccionada = agrupaciones.find(a => a.rubro === rubro) || null;
-    if (setAgrupacionSeleccionada) {
-      setAgrupacionSeleccionada(agrupacionSeleccionada);
-    }
-
-    // Limpiar búsqueda al seleccionar agrupación
-    if (setFiltroBusqueda) {
-      setFiltroBusqueda('');
+  
+    if (rubro === '') {
+      // Mostrar todos los artículos al seleccionar "Ver todas"
+      if (setAgrupacionSeleccionada) setAgrupacionSeleccionada(null);
+      if (setFiltroBusqueda) setFiltroBusqueda('');
       setBusqueda('');
+    } else {
+      const agrupacionSeleccionada = agrupaciones.find(a => a.rubro === rubro) || null;
+      if (setAgrupacionSeleccionada) setAgrupacionSeleccionada(agrupacionSeleccionada);
+      if (setFiltroBusqueda) {
+        setFiltroBusqueda('');
+        setBusqueda('');
+      }
     }
   };
+  
 
   return (
     <nav className="navbar">
@@ -50,7 +49,9 @@ const Navbar = ({
         <Link to="/agrupaciones" className="nav-link">Agrupaciones</Link>
       </div>
       <div className="navbar-actions">
+        {/* Buscador ahora en el Navbar */}
         <Buscador value={busqueda} setFiltroBusqueda={handleBuscar} />
+        
         <FormControl size="small" sx={{ minWidth: 180, ml: 2 }}>
           <InputLabel>Agrupaciones</InputLabel>
           <Select
@@ -58,7 +59,6 @@ const Navbar = ({
             onChange={handleAgrupacionChange}
             label="Agrupaciones"
           >
-            <MenuItem value="">Ver todas</MenuItem>
             {agrupaciones.map((agrupacion, idx) => (
               <MenuItem key={idx} value={agrupacion.rubro}>
                 {agrupacion.rubro}
@@ -66,11 +66,9 @@ const Navbar = ({
             ))}
           </Select>
         </FormControl>
-        <ThemeToggle />
       </div>
     </nav>
   );
 };
-
 
 export default Navbar;

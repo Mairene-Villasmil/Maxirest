@@ -13,6 +13,9 @@ const Agrupaciones = () => {
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState("");
     const [agrupaciones, setAgrupaciones] = useState([]);
+    const [agrupacionSeleccionada, setAgrupacionSeleccionada] = useState(null);
+    const [openModal, setOpenModal] = useState(false);
+
 
     // Actualiza las agrupaciones guardadas en localStorage
     const actualizarAgrupaciones = () => {
@@ -157,6 +160,7 @@ const Agrupaciones = () => {
         }));
     };
 
+
     return (
         <div className="p-4">
             <h2 className="text-xl font-bold">Crear Agrupación</h2>
@@ -173,7 +177,7 @@ const Agrupaciones = () => {
             </Button>
 
             <Button onClick={crearAgrupacion} variant="contained" color="success" className="mt-4">
-                Crear
+                Guardar
             </Button>
 
             <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
@@ -193,14 +197,6 @@ const Agrupaciones = () => {
                     <Typography variant="h6" fontWeight="bold" gutterBottom>
                         Selecciona Categorías y Artículos
                     </Typography>
-
-                    <TextField
-                        label="Buscar Artículos"
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        fullWidth
-                        sx={{ mb: 2 }}
-                    />
 
                     {loading ? (
                         <Typography>Cargando artículos...</Typography>
@@ -246,7 +242,7 @@ const Agrupaciones = () => {
 
                     <Box display="flex" justifyContent="flex-end" mt={3}>
                         <Button onClick={() => setModalOpen(false)} variant="contained" color="secondary">
-                            Cerrar
+                            Crear
                         </Button>
                     </Box>
                 </Box>
@@ -257,13 +253,20 @@ const Agrupaciones = () => {
                 onEliminar={(index) => {
                     const nuevas = [...agrupaciones];
                     nuevas.splice(index, 1);
-                    setAgrupaciones(nuevas); // o guardalas en localStorage si lo estás haciendo así
+                    setAgrupaciones(nuevas);
                 }}
                 onAgregarArticulos={(index) => {
-                    // Abrí modal, popup, o setea un `agrupacionSeleccionada` para agregarle artículos
-                    console.log("Agregar artículos a agrupación:", index);
+                    setAgrupacionSeleccionada(index);
+                    setOpenModal(true);
+                }}
+                onEliminarArticulo={(indexAgrupacion, articuloId) => {
+                    const nuevas = [...agrupaciones];
+                    nuevas[indexAgrupacion].articulos = nuevas[indexAgrupacion].articulos.filter(a => a.id !== articuloId);
+                    setAgrupaciones(nuevas);
                 }}
             />
+
+
         </div>
     );
 };
