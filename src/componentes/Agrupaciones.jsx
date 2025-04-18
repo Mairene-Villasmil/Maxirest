@@ -16,8 +16,6 @@ const Agrupaciones = () => {
     const [agrupacionSeleccionada, setAgrupacionSeleccionada] = useState(null);
     const [openModal, setOpenModal] = useState(false);
 
-
-    // Actualiza las agrupaciones guardadas en localStorage
     const actualizarAgrupaciones = () => {
         const agrupacionesGuardadas = JSON.parse(localStorage.getItem("agrupaciones")) || [];
         setAgrupaciones(agrupacionesGuardadas);
